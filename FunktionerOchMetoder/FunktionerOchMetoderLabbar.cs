@@ -5,6 +5,7 @@ using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 using FunktionerOchMetoder.Model;
+using Newtonsoft.Json;
 
 namespace FunktionerOchMetoder
 {
@@ -68,9 +69,6 @@ namespace FunktionerOchMetoder
                         Console.WriteLine("Ange spelaren du vill ta bort");
                         Console.WriteLine("Namn, ålder, tröjnummer");
 
-
-
-
                         break;
 
                     case 4:
@@ -127,9 +125,39 @@ namespace FunktionerOchMetoder
         //    return salary;
         //}
 
+        public void FileDemos()
+        {
+            var lines = File.ReadAllLines("SwedishCounties.txt");
+            foreach (var line in lines)
+                Console.WriteLine(line);
+        }
+        public void SavingPlayersInFile(List<HockeyPlayer> allLegendaryPlayers)
+        {
+            var text = JsonConvert.SerializeObject(allLegendaryPlayers);
+
+
+
+            using (var file = File.CreateText("PlayersJson.txt"))
+            {
+                file.Write(text);
+            }
+        }
+
+        public List<HockeyPlayer> GetFromFile()
+        {
+            var allLegendaryPlayers = new List<HockeyPlayer>();
+            if (!File.Exists("PlayersJson.txt")) return allLegendaryPlayers;
+
+            var allLines = File.ReadLines("PlayersJson.txt");
+            return allLegendaryPlayers;
+        }
+
         public void Run()
         {
-            LegendaryPlayers();
+            FileDemos();
+
+            //LegendaryPlayers();
+
 
             //Console.WriteLine("Ange ålder");
             //int age = int.Parse(Console.ReadLine());
